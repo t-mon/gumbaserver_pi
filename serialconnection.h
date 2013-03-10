@@ -18,7 +18,6 @@ private:
     QString gumbaHoleText;
     QString m_gumbaBuffer;
 
-    void toggleRTS();
 
 signals:
     void obstacleLeftOn();
@@ -38,6 +37,7 @@ private slots:
     
 public slots:
     void connectToRobot();
+    void toggleRTS();
     void startRobotApplication();
 
 };
