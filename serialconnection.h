@@ -38,6 +38,7 @@ private slots:
     
 public slots:
     void connectToRobot();
+    void startRobotApplication();
 
 };
 

@@ -33,7 +33,15 @@ void SerialConnection::connectToRobot()
         qDebug() << "Port not opend!";
     }
 
-    QString readyString = gumba->readLine();
+    //QString readyString = gumba->readLine();
+}
+
+void SerialConnection::startRobotApplication()
+{
+    gumba->write("s\n");
+    //printToTerminal("> start roboter application");
+    qDebug() << "Start robot application";
+    gumba->flush();
 }
 
 void SerialConnection::toggleRTS()
@@ -48,7 +56,7 @@ void SerialConnection::gumbaPackageAvalable()
     m_gumbaBuffer.append(gumba->readAll());
     //qDebug() << "got Buffer" << m_gumbaBuffer;
     int newLinePosGumba = m_gumbaBuffer.indexOf('\n')+1;
-    qDebug() << "newline index" << newLinePosGumba;
+    //qDebug() << "newline index" << newLinePosGumba;
     emit gumbaPackageReceived(m_gumbaBuffer.left(newLinePosGumba));
     m_gumbaBuffer = m_gumbaBuffer.right(m_gumbaBuffer.length() - newLinePosGumba);
 }
@@ -142,6 +150,4 @@ void SerialConnection::parseNewLine(const QString &gumbaString)
 
         qDebug() << "       " + gumbaString;
     }
-
-
 }
