@@ -21,6 +21,8 @@ SerialConnection::SerialConnection(QObject *parent) :
     gumba = new QextSerialPort("/dev/ttyUSB0",gumbaPortSettings);
     gumba->flush();
     connect(gumba,SIGNAL(readyRead()),this,SLOT(gumbaPackageAvalable()));
+    connect(this,SIGNAL(gumbaPackageReceived(QString)),this,SLOT(parseNewLine(QString)));
+
 }
 
 void SerialConnection::connectToRobot()
@@ -39,7 +41,6 @@ void SerialConnection::connectToRobot()
 void SerialConnection::startRobotApplication()
 {
     gumba->write("s\n");
-    //printToTerminal("> start roboter application");
     qDebug() << "Start robot application";
     gumba->flush();
 }
@@ -65,13 +66,6 @@ void SerialConnection::parseNewLine(const QString &gumbaString)
 {
     qDebug() << "Line to parse: _--------------" << gumbaString;
 
-    //    if(gumbaString.at(0) == '[' && gumbaString.at(1) == 'R' && gumbaString.at(2) == 'P' ){
-    //        qDebug() << "Got [READY] string...";
-
-    //        gumba->write("\n");
-    //    }
-
-
     if (gumbaString.at(0) == '{'){
         QVariantMap sensors;
         QJson::Parser parser;
@@ -90,24 +84,6 @@ void SerialConnection::parseNewLine(const QString &gumbaString)
                 qDebug() << "Motor left: " << iMotorL;
                 qDebug() << "Light right: " << lightR;
                 qDebug() << "Light left: " << lightL;
-
-                //                ui->motorRightLable->setText("Motor Right: " + QString::number(iMotorR));
-                //                ui->motorLeftLable->setText("Motor Left: " + QString::number(iMotorL));
-                //                ui->lightLeftLable->setText("Light Left: " + QString::number(lightL));
-                //                ui->lightRightLable->setText("Light Right: " + QString::number(lightR));
-
-
-                //                ubat = ubat/100;
-                //                if (ubat != 0){
-                //                    if(ubat > 5.8){
-                //                        ui->bateryLineEdit->setStyleSheet("background-color:green;");
-                //                    }else if (ubat <= 5.8){
-                //                        ui->bateryLineEdit->setStyleSheet("background-color:red;");
-                //                    }
-                //                    ui->bateryLineEdit->clear();
-                //                    ui->bateryLineEdit->setText(QString::number(ubat) +"V");
-                //                }
-
             }
         }
 
@@ -148,6 +124,6 @@ void SerialConnection::parseNewLine(const QString &gumbaString)
     }
     if(gumbaString.at(0) == '[' || gumbaString.at(0) == '#' ){
 
-        qDebug() << "       " + gumbaString;
+        qDebug() << "            " + gumbaString;
     }
 }
