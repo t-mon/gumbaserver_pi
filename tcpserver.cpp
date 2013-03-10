@@ -36,13 +36,15 @@ void TcpServer::readData()
     map = parser.parse(dataIn).toMap();
     if((map.value("target").toString() == "RoboterApplication") && (map.value("command").toString() == "start")){
         emit startRoboApp();
-        //emit writeToTerminal("starts Robot Application");
-        qDebug() << "-->emit SIGNAL start Robot Application";
+        qDebug() << "-->emit SIGNAL: Gumba, start Robot Application";
     }
-    if((map.value("target").toString() == "video") && (map.value("command").toString() == "start")){
-        //emit startVideoStream();
-        //emit writeToTerminal("video requested from " + client->peerAddress().toString());
-        //qDebug() << "-->emit SIGNAL start Video";
+    if((map.value("target").toString() == "RoboterApplication") && (map.value("command").toString() == "connect")){
+        emit connectToGumba();
+        qDebug() << "-->emit SIGNAL: Gumba, start Robot Application";
+    }
+    if((map.value("target").toString() == "RoboterApplication") && (map.value("command").toString() == "toggle")){
+        emit toggleRTS();
+        qDebug() << "-->emit SIGNAL: Gumba, toggle RTS";
     }
 }
 

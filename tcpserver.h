@@ -14,7 +14,10 @@ public:
     explicit TcpServer(QObject *parent = 0);
     
 signals:
+    void connectToGumba();
     void startRoboApp();
+    void toggleRTS();
+
     void writeToTerminal(const QString &terminalString);
 
 private:

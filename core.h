@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include "tcpserver.h"
+#include "serialconnection.h"
 
 class Core : public QObject
 {
@@ -12,7 +13,7 @@ public:
     
 private:
     TcpServer *m_server;
-
+    SerialConnection *m_robot;
 
 signals:
     

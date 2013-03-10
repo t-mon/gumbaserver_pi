@@ -9,7 +9,6 @@ class SerialConnection : public QObject
     Q_OBJECT
 public:
     explicit SerialConnection(QObject *parent = 0);
-    void connectToRobot();
 
 
 private:
@@ -38,7 +37,8 @@ private slots:
     void gumbaPackageAvalable();
     
 public slots:
-    
+    void connectToRobot();
+
 };
 
 #endif // SERIALCONNECTION_H
