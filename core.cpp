@@ -5,4 +5,5 @@ Core::Core(QObject *parent) :
 {
     m_server = new TcpServer(this);
 
+
 }

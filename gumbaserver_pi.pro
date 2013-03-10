@@ -15,11 +15,16 @@ CONFIG   -= app_bundle
 TEMPLATE = app
 
 LIBS += -lqjson
+include(qextserialport/src/qextserialport.pri)
+
+
 
 SOURCES += main.cpp \
     core.cpp \
-    tcpserver.cpp
+    tcpserver.cpp \
+    serialconnection.cpp
 
 HEADERS += \
     core.h \
-    tcpserver.h
+    tcpserver.h \
+    serialconnection.h
