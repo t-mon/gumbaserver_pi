@@ -123,7 +123,7 @@ void SerialConnection::parseNewLine(const QString &gumbaString)
             }
         }
     }
-    if(gumbaString.at(0) == '[' || gumbaString.at(0) == '#' ){
-        qDebug() << "==            " + gumbaString;
-    }
+//    if(gumbaString.at(0) == '[' || gumbaString.at(0) == '#' ){
+//        qDebug() << "==            " + gumbaString;
+//    }
 }
