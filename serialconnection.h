@@ -31,14 +31,16 @@ signals:
     void gumbaPackageReceived(QString);
     void gumbaDataReceived(QString);
 
+    void sendToClient(QString,QString);
+
 private slots:
     void parseNewLine(const QString & gumbaString);
     void gumbaPackageAvalable();
     
 public slots:
-    void connectToRobot();
+    void connectGumba();
     void toggleRTS();
-    void startRobotApplication();
+    void startGumbaApplication();
 
 };
 

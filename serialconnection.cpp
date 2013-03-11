@@ -22,10 +22,9 @@ SerialConnection::SerialConnection(QObject *parent) :
     gumba->flush();
     connect(gumba,SIGNAL(readyRead()),this,SLOT(gumbaPackageAvalable()));
     connect(this,SIGNAL(gumbaPackageReceived(QString)),this,SLOT(parseNewLine(QString)));
-
 }
 
-void SerialConnection::connectToRobot()
+void SerialConnection::connectGumba()
 {
 
     if(gumba->open(QextSerialPort::ReadWrite) == true){
@@ -38,7 +37,7 @@ void SerialConnection::connectToRobot()
     //QString readyString = gumba->readLine();
 }
 
-void SerialConnection::startRobotApplication()
+void SerialConnection::startGumbaApplication()
 {
     gumba->write("s\n");
     qDebug() << "Start robot application";
@@ -64,7 +63,9 @@ void SerialConnection::gumbaPackageAvalable()
 
 void SerialConnection::parseNewLine(const QString &gumbaString)
 {
-    qDebug() << "Line to parse: _--------------" << gumbaString;
+    //qDebug() << "Line to parse: _--------------" << gumbaString;
+
+    emit sendToClient("GumbaData",gumbaString);
 
     if (gumbaString.at(0) == '{'){
         QVariantMap sensors;
@@ -123,7 +124,6 @@ void SerialConnection::parseNewLine(const QString &gumbaString)
         }
     }
     if(gumbaString.at(0) == '[' || gumbaString.at(0) == '#' ){
-
-        qDebug() << "            " + gumbaString;
+        qDebug() << "==            " + gumbaString;
     }
 }

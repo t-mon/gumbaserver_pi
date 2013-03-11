@@ -14,7 +14,8 @@ public:
     explicit TcpServer(QObject *parent = 0);
     
 signals:
-    void connectToGumba();
+    void connectGumba();
+    void disconnectGumba();
     void startRoboApp();
     void toggleRTS();
 

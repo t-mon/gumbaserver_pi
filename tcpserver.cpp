@@ -39,7 +39,11 @@ void TcpServer::readData()
         qDebug() << "-->emit SIGNAL: Gumba, start Robot Application";
     }
     if((map.value("target").toString() == "RoboterApplication") && (map.value("command").toString() == "connect")){
-        emit connectToGumba();
+        emit connectGumba();
+        qDebug() << "-->emit SIGNAL: Gumba, start Robot Application";
+    }
+    if((map.value("target").toString() == "RoboterApplication") && (map.value("command").toString() == "disconnect")){
+        emit disconnectGumba();
         qDebug() << "-->emit SIGNAL: Gumba, start Robot Application";
     }
     if((map.value("target").toString() == "RoboterApplication") && (map.value("command").toString() == "toggle")){
