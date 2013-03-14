@@ -63,9 +63,14 @@ void SerialConnection::gumbaPackageAvalable()
 
 void SerialConnection::parseNewLine(const QString &gumbaString)
 {
-    //qDebug() << "Line to parse: _--------------" << gumbaString;
+    qDebug() << "Line to parse: _--------------" << gumbaString;
 
     emit sendToClient("GumbaData",gumbaString);
+
+    if(gumbaString.at(0) == '\n'){
+        qDebug() << "got empty message from gumba";
+        return;
+    }
 
     if (gumbaString.at(0) == '{'){
         QVariantMap sensors;
