@@ -65,12 +65,13 @@ void SerialConnection::parseNewLine(const QString &gumbaString)
 {
     qDebug() << "got gumbaline: " << gumbaString;
 
-    emit sendToClient("GumbaData",gumbaString);
 
     if(gumbaString.isEmpty()){
         qDebug() << "got empty message from gumba";
         return;
     }
+
+    emit sendToClient("GumbaData",gumbaString);
 
     if (gumbaString.at(0) == '{'){
         QVariantMap sensors;
