@@ -63,11 +63,11 @@ void SerialConnection::gumbaPackageAvalable()
 
 void SerialConnection::parseNewLine(const QString &gumbaString)
 {
-    qDebug() << "Line to parse: _--------------" << gumbaString;
+    qDebug() << "got gumbaline: " << gumbaString;
 
     emit sendToClient("GumbaData",gumbaString);
 
-    if(gumbaString.at(0) == '\n'){
+    if(gumbaString.isEmpty()){
         qDebug() << "got empty message from gumba";
         return;
     }
