@@ -36,19 +36,40 @@ void TcpServer::readData()
     map = parser.parse(dataIn).toMap();
     if((map.value("target").toString() == "RoboterApplication") && (map.value("command").toString() == "start")){
         emit startRoboApp();
-        qDebug() << "-->emit SIGNAL: Gumba, start Robot Application";
+        //qDebug() << "-->emit SIGNAL: Gumba, start Robot Application";
     }
     if((map.value("target").toString() == "RoboterApplication") && (map.value("command").toString() == "connect")){
         emit connectGumba();
-        qDebug() << "-->emit SIGNAL: Gumba, start Robot Application";
+        //qDebug() << "-->emit SIGNAL: Gumba, start Robot Application";
     }
     if((map.value("target").toString() == "RoboterApplication") && (map.value("command").toString() == "disconnect")){
         emit disconnectGumba();
-        qDebug() << "-->emit SIGNAL: Gumba, start Robot Application";
+        //qDebug() << "-->emit SIGNAL: Gumba, start Robot Application";
     }
     if((map.value("target").toString() == "RoboterApplication") && (map.value("command").toString() == "toggle")){
         emit toggleRTS();
-        qDebug() << "-->emit SIGNAL: Gumba, toggle RTS";
+        //qDebug() << "-->emit SIGNAL: Gumba, toggle RTS";
+    }
+    if((map.value("target").toString() == "RoboterMovement") && (map.value("command").toString() == "forward")){
+        emit movementForward();
+    }
+    if((map.value("target").toString() == "RoboterMovement") && (map.value("command").toString() == "backward")){
+        emit movementBackward();
+    }
+    if((map.value("target").toString() == "RoboterMovement") && (map.value("command").toString() == "left")){
+        emit movementLeft();
+    }
+    if((map.value("target").toString() == "RoboterMovement") && (map.value("command").toString() == "right")){
+        emit movementRight();
+    }
+    if((map.value("target").toString() == "RoboterMovement") && (map.value("command").toString() == "<")){
+        emit movementTurnLeft();
+    }
+    if((map.value("target").toString() == "RoboterMovement") && (map.value("command").toString() == "turnRight")){
+        emit movementTurnRight();
+    }
+    if((map.value("target").toString() == "RoboterMovement") && (map.value("command").toString() == "stop")){
+        emit movementStop();
     }
 }
 

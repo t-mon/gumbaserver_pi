@@ -19,6 +19,14 @@ signals:
     void startRoboApp();
     void toggleRTS();
 
+    void movementForward();
+    void movementBackward();
+    void movementLeft();
+    void movementRight();
+    void movementTurnLeft();
+    void movementTurnRight();
+    void movementStop();
+
     void writeToTerminal(const QString &terminalString);
 
 private:

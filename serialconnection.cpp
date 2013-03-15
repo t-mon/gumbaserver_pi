@@ -54,9 +54,7 @@ void SerialConnection::toggleRTS()
 void SerialConnection::gumbaPackageAvalable()
 {
     m_gumbaBuffer.append(gumba->readAll());
-    //qDebug() << "got Buffer" << m_gumbaBuffer;
     int newLinePosGumba = m_gumbaBuffer.indexOf('\n')+1;
-    //qDebug() << "newline index" << newLinePosGumba;
     emit gumbaPackageReceived(m_gumbaBuffer.left(newLinePosGumba));
     m_gumbaBuffer = m_gumbaBuffer.right(m_gumbaBuffer.length() - newLinePosGumba);
 }
