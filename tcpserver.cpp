@@ -91,7 +91,7 @@ void TcpServer::sendData(QString target, QString command)
 
         QJson::Serializer serializer;
         QByteArray dataOut = serializer.serialize(map);
-        qDebug() << "-->Send Data: " << dataOut;
+        //qDebug() << "-->Send Data: " << dataOut;
         client->write(dataOut);
     }
 }
