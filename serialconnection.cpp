@@ -30,13 +30,15 @@ void SerialConnection::connectGumba()
     if(gumba->open(QextSerialPort::ReadWrite) == true){
         qDebug() << "Port open!";
         toggleRTS();
-        gumba->write("k\n");
-        gumba->flush();
-        gumba->write("i\n");
-        gumba->flush();
     }else if(gumba->open(QextSerialPort::ReadWrite) == false){
         qDebug() << "Port not opend!";
     }
+}
+
+void SerialConnection::disconnectGumba()
+{
+    gumba->close();
+    qDebug() << "close port to gumba";
 }
 
 void SerialConnection::startGumbaApplication()

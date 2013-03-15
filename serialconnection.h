@@ -39,6 +39,7 @@ private slots:
     
 public slots:
     void connectGumba();
+    void disconnectGumba();
     void toggleRTS();
     void startGumbaApplication();
 
