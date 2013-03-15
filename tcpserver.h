@@ -27,6 +27,8 @@ signals:
     void movementTurnRight();
     void movementStop();
 
+    void speedChanged(const int &speedLevel);
+
     void writeToTerminal(const QString &terminalString);
 
 private:

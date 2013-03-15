@@ -50,6 +50,8 @@ public slots:
     void movementTurnRight();
     void movementStop();
 
+    void speedChanged(const int &speedLevel);
+
 };
 
 #endif // SERIALCONNECTION_H

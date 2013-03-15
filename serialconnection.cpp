@@ -95,6 +95,28 @@ void SerialConnection::movementStop()
     gumba->flush();
 }
 
+void SerialConnection::speedChanged(const int &speedLevel)
+{
+    switch(speedLevel){
+    case 1:
+        gumba->write("u\n");
+        gumba->flush();
+        break;
+    case 2:
+        gumba->write("i\n");
+        gumba->flush();
+        break;
+    case 3:
+        gumba->write("o\n");
+        gumba->flush();
+        break;
+    case 4:
+        gumba->write("p\n");
+        gumba->flush();
+        break;
+    }
+}
+
 void SerialConnection::toggleRTS()
 {
     gumba->setRts(true);
