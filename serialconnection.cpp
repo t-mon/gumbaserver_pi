@@ -49,49 +49,49 @@ void SerialConnection::startGumbaApplication()
 void SerialConnection::movementForward()
 {
     gumba->write("w\n");
-    qDebug() << "Start robot application";
+    qDebug() << "move forward";
     gumba->flush();
 }
 
 void SerialConnection::movementBackward()
 {
     gumba->write("s\n");
-    qDebug() << "Start robot application";
+    qDebug() << "move backward";
     gumba->flush();
 }
 
 void SerialConnection::movementLeft()
 {
     gumba->write("a\n");
-    qDebug() << "Start robot application";
+    qDebug() << "move left";
     gumba->flush();
 }
 
 void SerialConnection::movementRight()
 {
     gumba->write("d\n");
-    qDebug() << "Start robot application";
+    qDebug() << "move right";
     gumba->flush();
 }
 
 void SerialConnection::movementTurnLeft()
 {
     gumba->write("q\n");
-    qDebug() << "Start robot application";
+    qDebug() << "turn left";
     gumba->flush();
 }
 
 void SerialConnection::movementTurnRight()
 {
     gumba->write("e\n");
-    qDebug() << "Start robot application";
+    qDebug() << "turn right";
     gumba->flush();
 }
 
 void SerialConnection::movementStop()
 {
     gumba->write("x\n");
-    qDebug() << "Start robot application";
+    qDebug() << "STOP";
     gumba->flush();
 }
 
@@ -101,18 +101,22 @@ void SerialConnection::speedChanged(const int &speedLevel)
     case 1:
         gumba->write("u\n");
         gumba->flush();
+        qDebug() << "speedlevel 1";
         break;
     case 2:
         gumba->write("i\n");
         gumba->flush();
+        qDebug() << "speedlevel 2";
         break;
     case 3:
         gumba->write("o\n");
         gumba->flush();
+        qDebug() << "speedlevel 3";
         break;
     case 4:
         gumba->write("p\n");
         gumba->flush();
+        qDebug() << "speedlevel MAX";
         break;
     }
 }
