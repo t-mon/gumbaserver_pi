@@ -30,16 +30,67 @@ void SerialConnection::connectGumba()
     if(gumba->open(QextSerialPort::ReadWrite) == true){
         qDebug() << "Port open!";
         toggleRTS();
+        gumba->write("k\n");
+        gumba->flush();
+        gumba->write("i\n");
+        gumba->flush();
     }else if(gumba->open(QextSerialPort::ReadWrite) == false){
         qDebug() << "Port not opend!";
     }
-
-    //QString readyString = gumba->readLine();
 }
 
 void SerialConnection::startGumbaApplication()
 {
     gumba->write("s\n");
+    qDebug() << "Start robot application";
+    gumba->flush();
+}
+
+void SerialConnection::movementForward()
+{
+    gumba->write("w\n");
+    qDebug() << "Start robot application";
+    gumba->flush();
+}
+
+void SerialConnection::movementBackward()
+{
+    gumba->write("s\n");
+    qDebug() << "Start robot application";
+    gumba->flush();
+}
+
+void SerialConnection::movementLeft()
+{
+    gumba->write("a\n");
+    qDebug() << "Start robot application";
+    gumba->flush();
+}
+
+void SerialConnection::movementRight()
+{
+    gumba->write("d\n");
+    qDebug() << "Start robot application";
+    gumba->flush();
+}
+
+void SerialConnection::movementTurnLeft()
+{
+    gumba->write("q\n");
+    qDebug() << "Start robot application";
+    gumba->flush();
+}
+
+void SerialConnection::movementTurnRight()
+{
+    gumba->write("e\n");
+    qDebug() << "Start robot application";
+    gumba->flush();
+}
+
+void SerialConnection::movementStop()
+{
+    gumba->write("x\n");
     qDebug() << "Start robot application";
     gumba->flush();
 }
@@ -68,63 +119,42 @@ void SerialConnection::parseNewLine(const QString &gumbaString)
 
     emit sendToClient("GumbaData",gumbaString);
 
-//    if (gumbaString.at(0) == '{'){
-//        QVariantMap sensors;
-//        QJson::Parser parser;
-//        sensors = parser.parse(gumbaString.toAscii()).toMap();
+    if (gumbaString.at(0) == '{'){
+        QVariantMap sensors;
+        QJson::Parser parser;
+        sensors = parser.parse(gumbaString.toAscii()).toMap();
 
-//        if((gumbaString.at(0) == '{') && (gumbaString.at(1) == '"') && (gumbaString.at(2) == 'e')){
-//            if(sensors.value("energy").toMap().value("batery").toInt() == 1){
-//                double ubat = sensors.value("energy").toMap().value("voltage").toDouble();
-//                double iMotorR = sensors.value("energy").toMap().value("motor_r").toDouble();
-//                double iMotorL = sensors.value("energy").toMap().value("motor_l").toDouble();
-//                double lightR = sensors.value("energy").toMap().value("light_r").toDouble();
-//                double lightL = sensors.value("energy").toMap().value("light_l").toDouble();
+        if((gumbaString.at(0) == '{') && (gumbaString.at(1) == '"') && (gumbaString.at(2) == 'e')){
+            if(sensors.value("energy").toMap().value("batery").toInt() == 1){
+                double ubat = sensors.value("energy").toMap().value("voltage").toDouble();
+                double iMotorR = sensors.value("energy").toMap().value("motor_r").toDouble();
+                double iMotorL = sensors.value("energy").toMap().value("motor_l").toDouble();
+                double lightR = sensors.value("energy").toMap().value("light_r").toDouble();
+                double lightL = sensors.value("energy").toMap().value("light_l").toDouble();
+            }
+        }
 
-//                qDebug() << "Batery Voltage: " << ubat;
-//                qDebug() << "Motor right: " << iMotorR;
-//                qDebug() << "Motor left: " << iMotorL;
-//                qDebug() << "Light right: " << lightR;
-//                qDebug() << "Light left: " << lightL;
-//            }
-//        }
-
-//        if((gumbaString.at(0) == '{') && (gumbaString.at(1) == '"') && (gumbaString.at(2) == 'o')){
-//            if(sensors.value("obstacles").toMap().value("left").toInt() == 0){
-//                emit obstacleLeftOff();
-//                //ui->obstacleLeft->setStyleSheet("background-color:green;");
-//                qDebug() << "Obstacle Left OFF";
-//            } if(sensors.value("obstacles").toMap().value("left").toInt() == 1){
-//                emit obstacleLeftOn();
-//                //ui->obstacleLeft->setStyleSheet("background-color:red;");
-//                qDebug() << "Obstacle Left ON";
-//            } if(sensors.value("obstacles").toMap().value("right").toInt() == 0){
-//                emit obstacleRightOff();
-//                //ui->obstacleRight->setStyleSheet("background-color:green;");
-//                qDebug() << "Obstacle Right OFF";
-//            } if(sensors.value("obstacles").toMap().value("right").toInt() == 1){
-//                emit obstacleRightOn();
-//                //ui->obstacleRight->setStyleSheet("background-color:red;");
-//                qDebug() << "Obstacle Right ON";
-//            }
-//        }
-//        if((gumbaString.at(0) == '{') && (gumbaString.at(1) == '"') && (gumbaString.at(2) == 'b')){
-//            if(sensors.value("bumper").toMap().value("left").toInt() == 0){
-//                emit bumperLeftReleased();
-//                qDebug() << "Bumper Left OFF";
-//            } if(sensors.value("bumper").toMap().value("left").toInt() == 1){
-//                emit bumperLeftPressd(true);
-//                qDebug() << "Bumper Left ON";
-//            } if(sensors.value("bumper").toMap().value("right").toInt() == 0){
-//                emit bumperRightReleased();
-//                qDebug() << "Bumper Right OFF";
-//            } if(sensors.value("bumper").toMap().value("right").toInt() == 1){
-//                emit bumperRightPressed();
-//                qDebug() << "Bumper Right ON";
-//            }
-//        }
-//    }
-//    if(gumbaString.at(0) == '[' || gumbaString.at(0) == '#' ){
-//        qDebug() << "==            " + gumbaString;
-//    }
+        if((gumbaString.at(0) == '{') && (gumbaString.at(1) == '"') && (gumbaString.at(2) == 'o')){
+            if(sensors.value("obstacles").toMap().value("left").toInt() == 0){
+                emit obstacleLeftOff();
+            } if(sensors.value("obstacles").toMap().value("left").toInt() == 1){
+                emit obstacleLeftOn();
+            } if(sensors.value("obstacles").toMap().value("right").toInt() == 0){
+                emit obstacleRightOff();
+            } if(sensors.value("obstacles").toMap().value("right").toInt() == 1){
+                emit obstacleRightOn();
+            }
+        }
+        if((gumbaString.at(0) == '{') && (gumbaString.at(1) == '"') && (gumbaString.at(2) == 'b')){
+            if(sensors.value("bumper").toMap().value("left").toInt() == 0){
+                emit bumperLeftReleased();
+            } if(sensors.value("bumper").toMap().value("left").toInt() == 1){
+                emit bumperLeftPressd();
+            } if(sensors.value("bumper").toMap().value("right").toInt() == 0){
+                emit bumperRightReleased();
+            } if(sensors.value("bumper").toMap().value("right").toInt() == 1){
+                emit bumperRightPressed();
+            }
+        }
+    }
 }

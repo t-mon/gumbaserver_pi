@@ -24,7 +24,7 @@ signals:
     void obstacleLeftOff();
     void obstacleRightOn();
     void obstacleRightOff();
-    void bumperLeftPressd(bool);
+    void bumperLeftPressd();
     void bumperLeftReleased();
     void bumperRightPressed();
     void bumperRightReleased();
@@ -41,6 +41,14 @@ public slots:
     void connectGumba();
     void toggleRTS();
     void startGumbaApplication();
+
+    void movementForward();
+    void movementBackward();
+    void movementLeft();
+    void movementRight();
+    void movementTurnLeft();
+    void movementTurnRight();
+    void movementStop();
 
 };
 
