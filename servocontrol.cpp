@@ -33,32 +33,34 @@ void ServoControl::initServo(){
 void ServoControl::setServo(int servoNumber, int pwm)
 {
     QProcess writeServo;
+    QString cmd;
     switch(servoNumber){
     case 0:
-        writeServo.start("echo", QStringList() << "0=" + QString::number(pwm) << "> /dev/servoblaster");
+        cmd="0=" + QString::number(pwm);
         break;
     case 1:
-        writeServo.start("echo", QStringList() << "1=" + QString::number(pwm) << "> /dev/servoblaster");
+        cmd="1=" + QString::number(pwm);
         break;
     case 2:
-        writeServo.start("echo", QStringList() << "2=" + QString::number(pwm) << "> /dev/servoblaster");
+        cmd="2=" + QString::number(pwm);
         break;
     case 3:
-        writeServo.start("echo", QStringList() << "3=" + QString::number(pwm) << "> /dev/servoblaster");
+        cmd="3=" + QString::number(pwm);
         break;
     case 4:
-        writeServo.start("echo", QStringList() << "4=" + QString::number(pwm) << "> /dev/servoblaster");
+        cmd="4=" + QString::number(pwm);
         break;
     case 5:
-        writeServo.start("echo", QStringList() << "5=" + QString::number(pwm) << "> /dev/servoblaster");
+        cmd="5=" + QString::number(pwm);
         break;
     case 6:
-        writeServo.start("echo", QStringList() << "6=" + QString::number(pwm) << "> /dev/servoblaster");
+        cmd="6=" + QString::number(pwm);
         break;
     case 7:
-        writeServo.start("echo", QStringList() << "7=" + QString::number(pwm) << "> /dev/servoblaster");
+        cmd="7=" + QString::number(pwm);
         break;
     }
+    writeServo.start("echo", QStringList() << cmd << ">" << "/dev/servoblaster");
     writeServo.waitForFinished();
 }
 
