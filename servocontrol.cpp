@@ -1,5 +1,6 @@
 #include "servocontrol.h"
 #include <QDebug>
+#include <QFile>
 
 ServoControl::ServoControl(QObject *parent) :
     QObject(parent)
@@ -32,7 +33,10 @@ void ServoControl::initServo(){
 
 void ServoControl::setServo(const int &servoNumber, const QString &pwm)
 {
-    QProcess writeServo;
+    QFile servoblaster("/dev/servoblaster");
+    servoblaster.open(QIODevice::WriteOnly | QIODevice::Text);
+
+    //QProcess writeServo;
     QString cmd;
     switch(servoNumber){
     case 0:
@@ -60,9 +64,11 @@ void ServoControl::setServo(const int &servoNumber, const QString &pwm)
         cmd="7=" + pwm;
         break;
     }
-    qDebug() << "Write to servoblaster:" << "echo" << cmd << ">" << "/dev/servoblaster";
-    writeServo.start("echo", QStringList() << cmd << ">" << "/dev/servoblaster");
-    writeServo.waitForFinished();
+    qDebug() << "Write to servoblaster:" << cmd;
+    servoblaster.write(cmd.toAscii());
+    servoblaster.close();
+    //writeServo.start("echo", QStringList() << cmd << ">" << "/dev/servoblaster");
+    //writeServo.waitForFinished();
 }
 
 
