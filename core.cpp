@@ -23,7 +23,7 @@ Core::Core(QObject *parent) :
 
     connect(m_server,SIGNAL(speedChanged(int)),m_robot,SLOT(speedChanged(int)));
 
-    connect(m_server,SIGNAL(servoInit()),m_servo,SLOT(initServoControl()));
+    connect(m_server,SIGNAL(servoInit()),m_servo,SLOT(initServo()));
 
     connect(m_robot,SIGNAL(sendToClient(QString,QString)),m_server,SLOT(sendData(QString,QString)));
     connect(m_servo,SIGNAL(sendToClient(QString,QString)),m_server,SLOT(sendData(QString,QString)));

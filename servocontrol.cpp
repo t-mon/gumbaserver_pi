@@ -4,47 +4,27 @@
 ServoControl::ServoControl(QObject *parent) :
     QObject(parent)
 {
-    loadServod = new QProcess(this);
-    loadServoblasterModul = new QProcess(this);
+    initServoProcess = new QProcess(this);
+    processString.clear();
 
-    connect(loadServod,SIGNAL(readyRead()),this,SLOT(servodOutputAvalable()));
-    connect(loadServod,SIGNAL(finished(int)),this,SLOT(loadServodFinished(int)));
-
-}
-
-void ServoControl::initServoControl(){
-    QString servodString = "./root/development/ServoBlaster/servod";
-    QString servoblasterModulString = "/root/development/ServoBlaster/servoblaster.ko";
-
-    emit sendToClient("Terminal","insmod servoblaster modul...");
-    loadServoblasterModul->start("insmod", QStringList() << servoblasterModulString);
-    qDebug() << "exitstatus load servoblaster modul: " << loadServoblasterModul->exitStatus();
-
-
-    emit sendToClient("Terminal","loading servod daemon...");
-    qDebug() << "loading servod daemon...";
-    loadServod->start(servodString, QStringList() << "");
-    qDebug() << loadServod->readAllStandardOutput();
-    qDebug() << "exitstatus load servod: " << loadServod->exitStatus();
+    connect(initServoProcess,SIGNAL(readyRead()),this,SLOT(initServoProcessReadyRead()));
+    connect(initServoProcess,SIGNAL(finished(int)),this,SLOT(initServoProcessFinished(int)));
 
 }
 
+void ServoControl::initServo(){
+    initServoProcess->start("/root/scripts/initServoblaster.sh");
+}
 
-void ServoControl::servodOutputAvalable()
+
+void ServoControl::initServoProcessReadyRead()
 {
-    qDebug() << "got servod output data";
-    qDebug() << loadServod->readAllStandardOutput();
+    processString.append(initServoProcess->readAll());
 }
 
-void ServoControl::loadServodFinished(const int &exitStatus)
+void ServoControl::initServoProcessFinished(const int &exitStatus)
 {
-    qDebug() << "load servod exitstatus: " << QString::number(exitStatus);
-//    //if(loadServod->exitStatus() == QProcess::NormalExit){
-//    if(exitStatus == 0){
-//        emit sendToClient("Terminal","-->servod daemon loaded.");
-//        qDebug() << "-->servod daemon loaded." ;
-//    }else{
-//        emit sendToClient("Terminal","-->ERROR: servod daemon not loaded.");
-//        qDebug() << "-->ERROR: servod daemon not loaded.";
-//    }
+    qDebug() << processString;
+    qDebug() << "init servoblaster exit status: " << QString::number(exitStatus);
+    processString.clear();
 }

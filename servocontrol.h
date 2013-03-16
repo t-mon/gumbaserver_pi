@@ -11,19 +11,18 @@ public:
     explicit ServoControl(QObject *parent = 0);
     
 private:
-    QProcess *loadServod;
-    QProcess *loadServoblasterModul;
-
+    QProcess *initServoProcess;
+    QString processString;
 
 signals:
     void sendToClient(QString,QString);
 
 private slots:
-    void servodOutputAvalable();
-    void loadServodFinished(const int &exitStatus);
+    void initServoProcessReadyRead();
+    void initServoProcessFinished(const int &exitStatus);
 
 public slots:
-    void initServoControl();
+    void initServo();
     
 };
 
