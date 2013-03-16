@@ -71,6 +71,10 @@ void TcpServer::readData()
         qDebug() << map.value("command").toInt();
         emit speedChanged(map.value("command").toInt());
     }
+    if((map.value("target").toString() == "Servo") && (map.value("command").toString() == "init")){
+        emit servoInit();
+    }
+
 
 }
 

@@ -1,10 +1,12 @@
 #include "core.h"
 
+
 Core::Core(QObject *parent) :
     QObject(parent)
 {
     m_server = new TcpServer(this);
     m_robot = new SerialConnection(this);
+    m_servo = new ServoControl(this);
 
     connect(m_server,SIGNAL(connectGumba()),m_robot,SLOT(connectGumba()));
     connect(m_server,SIGNAL(disconnectGumba()),m_robot,SLOT(disconnectGumba()));
@@ -21,7 +23,10 @@ Core::Core(QObject *parent) :
 
     connect(m_server,SIGNAL(speedChanged(int)),m_robot,SLOT(speedChanged(int)));
 
+    connect(m_server,SIGNAL(servoInit()),m_servo,SLOT(initServoControl()));
 
     connect(m_robot,SIGNAL(sendToClient(QString,QString)),m_server,SLOT(sendData(QString,QString)));
+    connect(m_servo,SIGNAL(sendToClient(QString,QString)),m_server,SLOT(sendData(QString,QString)));
+
 
 }

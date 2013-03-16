@@ -22,9 +22,11 @@ include(qextserialport/src/qextserialport.pri)
 SOURCES += main.cpp \
     core.cpp \
     tcpserver.cpp \
-    serialconnection.cpp
+    serialconnection.cpp \
+    servocontrol.cpp
 
 HEADERS += \
     core.h \
     tcpserver.h \
-    serialconnection.h
+    serialconnection.h \
+    servocontrol.h

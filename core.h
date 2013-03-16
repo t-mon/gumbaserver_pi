@@ -4,6 +4,7 @@
 #include <QObject>
 #include "tcpserver.h"
 #include "serialconnection.h"
+#include "servocontrol.h"
 
 class Core : public QObject
 {
@@ -14,6 +15,7 @@ public:
 private:
     TcpServer *m_server;
     SerialConnection *m_robot;
+    ServoControl *m_servo;
 
 signals:
     

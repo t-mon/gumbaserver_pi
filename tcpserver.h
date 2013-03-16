@@ -29,6 +29,8 @@ signals:
 
     void speedChanged(const int &speedLevel);
 
+    void servoInit();
+
     void writeToTerminal(const QString &terminalString);
 
 private:
