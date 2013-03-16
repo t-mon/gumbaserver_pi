@@ -19,15 +19,15 @@ void ServoControl::initServo(){
 }
 
 
-//Servo number    GPIO number   Pin in P1 header
-//     0               4             P1-7
-//     1              17             P1-11
-//     2              18             P1-12
-//     3              21             P1-13
-//     4              22             P1-15
-//     5              23             P1-16
-//     6              24             P1-18
-//     7              25             P1-22
+// Servo number    GPIO number   Pin in P1 header
+//      0               4             P1-7
+//      1              17             P1-11
+//      2              18             P1-12
+//      3              21             P1-13
+//      4              22             P1-15
+//      5              23             P1-16
+//      6              24             P1-18
+//      7              25             P1-22
 
 
 void ServoControl::setServo(int servoNumber, int pwm)
@@ -59,6 +59,7 @@ void ServoControl::setServo(int servoNumber, int pwm)
         writeServo.start("echo", QStringList() << "7=" + QString::number(pwm) << "> /dev/servoblaster");
         break;
     }
+    writeServo.waitForFinished();
 }
 
 
