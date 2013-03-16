@@ -5,7 +5,11 @@ ServoControl::ServoControl(QObject *parent) :
     QObject(parent)
 {
     loadServod = new QProcess(this);
+    loadServoblasterModul = new QProcess(this);
+
     servod = "./root/development/ServoBlaster/servod";
+    servoblasterModul = "/root/development/ServoBlaster/servoblaster.ko";
+
 
     connect(loadServod,SIGNAL(readyRead()),this,SLOT(servodOutputAvalable()));
     connect(loadServod,SIGNAL(finished(int)),this,SLOT(loadServodFinished(int)));
@@ -16,8 +20,10 @@ void ServoControl::initServoControl(){
     emit sendToClient("Terminal","loading servod daemon...");
     qDebug() << "loading servod daemon...";
     loadServod->start(servod);
+    qDebug() << "exitstatus load servod: " << loadServod->exitStatus();
 
-    //    qDebug() << loadServod->readAllStandardOutput();
+    loadServoblasterModul->start("insmod", QStringList() << servoblasterModul);
+    qDebug() << "exitstatus load servoblaster modul: " << loadServoblasterModul->exitStatus();
 
 }
 
