@@ -13,8 +13,7 @@ public:
 private:
     QProcess *loadServod;
     QProcess *loadServoblasterModul;
-    QString servod;
-    QString servoblasterModul;
+
 
 signals:
     void sendToClient(QString,QString);
