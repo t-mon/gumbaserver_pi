@@ -30,36 +30,37 @@ void ServoControl::initServo(){
 //      7              25             P1-22
 
 
-void ServoControl::setServo(int servoNumber, int pwm)
+void ServoControl::setServo(const int &servoNumber, const QString &pwm)
 {
     QProcess writeServo;
     QString cmd;
     switch(servoNumber){
     case 0:
-        cmd="0=" + QString::number(pwm);
+        cmd="0=" + pwm;
         break;
     case 1:
-        cmd="1=" + QString::number(pwm);
+        cmd="1=" + pwm;
         break;
     case 2:
         cmd="2=" + pwm;
         break;
     case 3:
-        cmd="3=" + QString::number(pwm);
+        cmd="3=" + pwm;
         break;
     case 4:
-        cmd="4=" + QString::number(pwm);
+        cmd="4=" + pwm;
         break;
     case 5:
-        cmd="5=" + QString::number(pwm);
+        cmd="5=" + pwm;
         break;
     case 6:
-        cmd="6=" + QString::number(pwm);
+        cmd="6=" + pwm;
         break;
     case 7:
-        cmd="7=" + QString::number(pwm);
+        cmd="7=" + pwm;
         break;
     }
+    qDebug() << "Write to servoblaster:" << "echo" << cmd << ">" << "/dev/servoblaster";
     writeServo.start("echo", QStringList() << cmd << ">" << "/dev/servoblaster");
     writeServo.waitForFinished();
 }

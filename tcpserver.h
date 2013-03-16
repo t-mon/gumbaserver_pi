@@ -30,7 +30,7 @@ signals:
     void speedChanged(const int &speedLevel);
 
     void servoInit();
-    void servoChanged(const int &servoNumber, const int &pwm);
+    void servoChanged(const int &servoNumber, const QString &pwm);
     void writeToTerminal(const QString &terminalString);
 
 private:

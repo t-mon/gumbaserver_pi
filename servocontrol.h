@@ -26,7 +26,7 @@ private slots:
 
 public slots:
     void initServo();
-    void setServo(int servoNumber, int pwm);
+    void setServo(const int &servoNumber, const QString &pwm);
     
 };
 
