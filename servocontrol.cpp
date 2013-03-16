@@ -42,7 +42,7 @@ void ServoControl::setServo(int servoNumber, int pwm)
         cmd="1=" + QString::number(pwm);
         break;
     case 2:
-        cmd="2=" + QString::number(pwm);
+        cmd="2=" + pwm;
         break;
     case 3:
         cmd="3=" + QString::number(pwm);

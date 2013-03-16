@@ -81,7 +81,8 @@ void TcpServer::readData()
         emit servoInit();
     }
     if((map.value("target").toString() == "Servo2")){
-        int pwm=map.value("command").toInt();
+        int pwm=map.value("target").toMap().value("command").toInt();
+        qDebug() << "servo 2 set to" << pwm;
         emit servoChanged(2,pwm);
     }
 
