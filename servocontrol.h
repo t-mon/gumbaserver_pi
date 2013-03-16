@@ -16,7 +16,11 @@ private:
 
 signals:
     void sendToClient(QString,QString);
-    
+
+private slots:
+    void servodOutputAvalable();
+    void loadServodFinished(const int &exitStatus);
+
 public slots:
     void initServoControl();
     
