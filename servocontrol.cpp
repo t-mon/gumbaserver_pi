@@ -7,8 +7,8 @@ ServoControl::ServoControl(QObject *parent) :
     initServoProcess = new QProcess(this);
     processString.clear();
 
-    //connect(initServoProcess,SIGNAL(readyReadStandardOutput()),this,SLOT(initServoProcessReadStandardOutput()));
-    //connect(initServoProcess,SIGNAL(readyReadStandardError()),this,SLOT(initServoProcessReadStandardError()));
+    connect(initServoProcess,SIGNAL(readyReadStandardOutput()),this,SLOT(initServoProcessReadStandardOutput()));
+    connect(initServoProcess,SIGNAL(readyReadStandardError()),this,SLOT(initServoProcessReadStandardError()));
     connect(initServoProcess,SIGNAL(finished(int)),this,SLOT(initServoProcessFinished(int)));
 
 }
@@ -16,9 +16,6 @@ ServoControl::ServoControl(QObject *parent) :
 void ServoControl::initServo(){
     initServoProcess->start("/root/scripts/initServoblaster.sh");
     initServoProcess->waitForFinished();
-    QByteArray data=initServoProcess->readAll();
-    QString output = QString(data);
-    qDebug() << output;
 }
 
 
