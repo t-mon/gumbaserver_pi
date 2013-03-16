@@ -7,24 +7,38 @@ ServoControl::ServoControl(QObject *parent) :
     initServoProcess = new QProcess(this);
     processString.clear();
 
-    connect(initServoProcess,SIGNAL(readyRead()),this,SLOT(initServoProcessReadyRead()));
+    //connect(initServoProcess,SIGNAL(readyReadStandardOutput()),this,SLOT(initServoProcessReadStandardOutput()));
+    //connect(initServoProcess,SIGNAL(readyReadStandardError()),this,SLOT(initServoProcessReadStandardError()));
     connect(initServoProcess,SIGNAL(finished(int)),this,SLOT(initServoProcessFinished(int)));
 
 }
 
 void ServoControl::initServo(){
     initServoProcess->start("/root/scripts/initServoblaster.sh");
+    initServoProcess->waitForFinished();
+    QString output=initServoProcess->readAll();
+    qDebug() << output;
 }
 
-
-void ServoControl::initServoProcessReadyRead()
-{
-    processString.append(initServoProcess->readAll());
-}
 
 void ServoControl::initServoProcessFinished(const int &exitStatus)
 {
     qDebug() << processString;
-    qDebug() << "init servoblaster exit status: " << QString::number(exitStatus);
+
+    if(exitStatus == 0){
+        qDebug() << "Servoblaster initialized successfully!";
+    }else{
+        qDebug() << "ERROR: Servoblaster not inizialized.";
+    }
     processString.clear();
+}
+
+void ServoControl::initServoProcessReadStandardOutput()
+{
+    processString.append(initServoProcess->readAllStandardOutput());
+}
+
+void ServoControl::initServoProcessReadStandardError()
+{
+    processString.append(initServoProcess->readAllStandardError());
 }

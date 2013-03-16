@@ -18,7 +18,9 @@ signals:
     void sendToClient(QString,QString);
 
 private slots:
-    void initServoProcessReadyRead();
+    void initServoProcessReadStandardOutput();
+    void initServoProcessReadStandardError();
+
     void initServoProcessFinished(const int &exitStatus);
 
 public slots:
