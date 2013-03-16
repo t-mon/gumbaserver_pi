@@ -34,6 +34,8 @@ void TcpServer::readData()
     QVariantMap map;
     QJson::Parser parser;
     map = parser.parse(dataIn).toMap();
+
+    // Roboter application
     if((map.value("target").toString() == "RoboterApplication") && (map.value("command").toString() == "start")){
         emit startRoboApp();
     }
@@ -46,6 +48,8 @@ void TcpServer::readData()
     if((map.value("target").toString() == "RoboterApplication") && (map.value("command").toString() == "toggle")){
         emit toggleRTS();
     }
+
+    // Roboter movement
     if((map.value("target").toString() == "RoboterMovement") && (map.value("command").toString() == "forward")){
         emit movementForward();
     }
@@ -71,10 +75,15 @@ void TcpServer::readData()
         qDebug() << map.value("command").toInt();
         emit speedChanged(map.value("command").toInt());
     }
+
+    // SERVO
     if((map.value("target").toString() == "Servo") && (map.value("command").toString() == "init")){
         emit servoInit();
     }
-
+    if((map.value("target").toString() == "Servo2")){
+        int pwm=map.value("command").toInt();
+        emit servoChanged(2,pwm);
+    }
 
 }
 

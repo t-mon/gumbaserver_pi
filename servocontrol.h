@@ -21,10 +21,12 @@ private slots:
     void initServoProcessReadStandardOutput();
     void initServoProcessReadStandardError();
 
+
     void initServoProcessFinished(const int &exitStatus);
 
 public slots:
     void initServo();
+    void setServo(int servoNumber, int pwm);
     
 };
 
