@@ -16,7 +16,8 @@ ServoControl::ServoControl(QObject *parent) :
 void ServoControl::initServo(){
     initServoProcess->start("/root/scripts/initServoblaster.sh");
     initServoProcess->waitForFinished();
-    QString output=initServoProcess->readAll();
+    QByteArray data=initServoProcess->readAll();
+    QString output = QString(data);
     qDebug() << output;
 }
 
