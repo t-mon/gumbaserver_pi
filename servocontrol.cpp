@@ -16,13 +16,16 @@ void ServoControl::initServoControl(){
     QString servodString = "./root/development/ServoBlaster/servod";
     QString servoblasterModulString = "/root/development/ServoBlaster/servoblaster.ko";
 
+    emit sendToClient("Terminal","insmod servoblaster modul...");
+    loadServoblasterModul->start("insmod", QStringList() << servoblasterModulString);
+    qDebug() << "exitstatus load servoblaster modul: " << loadServoblasterModul->exitStatus();
+
+
     emit sendToClient("Terminal","loading servod daemon...");
     qDebug() << "loading servod daemon...";
     loadServod->start(servodString, QStringList() << "");
+    qDebug() << loadServod->readAllStandardOutput();
     qDebug() << "exitstatus load servod: " << loadServod->exitStatus();
-
-    loadServoblasterModul->start("insmod", QStringList() << servoblasterModulString);
-    qDebug() << "exitstatus load servoblaster modul: " << loadServoblasterModul->exitStatus();
 
 }
 
