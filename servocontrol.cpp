@@ -19,26 +19,36 @@ ServoControl::ServoControl(QObject *parent) :
 }
 
 void ServoControl::initServo(){
-    initServoProcess->start("/root/scripts/initServoblaster.sh");
-    initServoProcess->waitForFinished();
+
+    qDebug() << "connect socket to servoblaster...";
+
+    if (!servoblaster->open(QIODevice::WriteOnly | QIODevice::Text)){
+        qDebug() << "ERROR: could not open /dev/servoblaseter";
+        qDebug() << "start initskript...";
+
+        initServoProcess->start("/root/scripts/initServoblaster.sh");
+        initServoProcess->waitForFinished();
+    }else{
+        qDebug() << "/dev/servoblaseter ... open!";
+    }
+
 }
 
 
-// Servo number    GPIO number   Pin in P1 header
-//      0               4             P1-7
-//      1              17             P1-11
-//      2              18             P1-12
-//      3              21             P1-13
-//      4              22             P1-15
-//      5              23             P1-16
-//      6              24             P1-18
-//      7              25             P1-22
 
 
 void ServoControl::setServo(const int &servoNumber, const QString &pwm)
 {
+    // Servo number    GPIO number   Pin in P1 header
+    //      0               4             P1-7
+    //      1              17             P1-11
+    //      2              18             P1-12
+    //      3              21             P1-13
+    //      4              22             P1-15
+    //      5              23             P1-16
+    //      6              24             P1-18
+    //      7              25             P1-22
 
-    servoblaster->open(QIODevice::WriteOnly | QIODevice::Text);
     QString cmd;
     switch(servoNumber){
     case 0:
@@ -69,8 +79,13 @@ void ServoControl::setServo(const int &servoNumber, const QString &pwm)
     qDebug() << "Write to servoblaster:" << cmd;
     cmd = cmd + "\n";
 
+    //QByteArray command = QFile::encodeName(cmd + '\n');
+    //servoSocket->write(command);
+
     servoblaster->write(cmd.toAscii());
-    servoblaster->close();
+    servoblaster->flush();
+
+    //servoblaster->close();
     //writeServo.start("echo", QStringList() << cmd << ">" << "/dev/servoblaster");
     //writeServo.waitForFinished();
 }
@@ -88,14 +103,6 @@ void ServoControl::initServoProcessFinished(const int &exitStatus)
         qDebug() << "ERROR: Servoblaster not inizialized.";
     }
     processString.clear();
-
-    qDebug() << "connect socket to servoblaster...";
-
-    if (!servoblaster->open(QIODevice::WriteOnly | QIODevice::Text)){
-        qDebug() << "ERROR: could not open /dev/servoblaseter";
-        return;
-    }
-    qDebug() << "/dev/servoblaseter ... open!";
 }
 
 void ServoControl::servoSocketConnected()
