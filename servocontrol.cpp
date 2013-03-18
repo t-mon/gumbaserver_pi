@@ -7,10 +7,12 @@ ServoControl::ServoControl(QObject *parent) :
 {
     initServoProcess = new QProcess(this);
     processString.clear();
+    servoSocket = new QLocalSocket(this);
 
     connect(initServoProcess,SIGNAL(readyRead()),this,SLOT(initServoProcessReadStandardOutput()));
     connect(initServoProcess,SIGNAL(readyReadStandardError()),this,SLOT(initServoProcessReadStandardError()));
     connect(initServoProcess,SIGNAL(finished(int)),this,SLOT(initServoProcessFinished(int)));
+    connect(servoSocket,SIGNAL(connected()),this, SLOT(servoSocketConnected()));
 
 }
 
@@ -33,8 +35,8 @@ void ServoControl::initServo(){
 
 void ServoControl::setServo(const int &servoNumber, const QString &pwm)
 {
-    QFile servoblaster("/dev/servoblaster");
-    servoblaster.open(QIODevice::WriteOnly | QIODevice::Text);
+//    QFile servoblaster("/dev/servoblaster");
+//    servoblaster.open(QIODevice::WriteOnly | QIODevice::Text);
 
     //QProcess writeServo;
     QString cmd;
@@ -66,8 +68,10 @@ void ServoControl::setServo(const int &servoNumber, const QString &pwm)
     }
     qDebug() << "Write to servoblaster:" << cmd;
     cmd = cmd + "\n";
-    servoblaster.write(cmd.toAscii());
-    servoblaster.close();
+    servoSocket->write(cmd.toAscii(),cmd.size());
+
+    //servoblaster.write(cmd.toAscii());
+    //servoblaster.close();
     //writeServo.start("echo", QStringList() << cmd << ">" << "/dev/servoblaster");
     //writeServo.waitForFinished();
 }
@@ -85,6 +89,14 @@ void ServoControl::initServoProcessFinished(const int &exitStatus)
         qDebug() << "ERROR: Servoblaster not inizialized.";
     }
     processString.clear();
+    servoSocket->connectToServer("/dev/servoblaster",QIODevice::WriteOnly | QIODevice::Text);
+    qDebug() << "connect socket to servoblaster...";
+}
+
+void ServoControl::servoSocketConnected()
+{
+    qDebug() << "---> servoblaster socket connected...";
+
 }
 
 void ServoControl::initServoProcessReadStandardOutput()

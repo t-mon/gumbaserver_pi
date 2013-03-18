@@ -22,9 +22,8 @@ signals:
 private slots:
     void initServoProcessReadStandardOutput();
     void initServoProcessReadStandardError();
-
-
     void initServoProcessFinished(const int &exitStatus);
+    void servoSocketConnected();
 
 public slots:
     void initServo();
