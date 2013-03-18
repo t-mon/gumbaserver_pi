@@ -35,6 +35,7 @@ void TcpServer::readData()
     QJson::Parser parser;
     map = parser.parse(dataIn).toMap();
 
+    // ====================================================================================
     // Roboter application
     if((map.value("target").toString() == "RoboterApplication") && (map.value("command").toString() == "start")){
         emit startRoboApp();
@@ -49,6 +50,7 @@ void TcpServer::readData()
         emit toggleRTS();
     }
 
+    // ====================================================================================
     // Roboter movement
     if((map.value("target").toString() == "RoboterMovement") && (map.value("command").toString() == "forward")){
         emit movementForward();
@@ -75,10 +77,31 @@ void TcpServer::readData()
         qDebug() << map.value("command").toInt();
         emit speedChanged(map.value("command").toInt());
     }
-
+    // ====================================================================================
     // SERVO
+
+    // Servo number    GPIO number   Pin in P1 header
+    //      0               4             P1-7
+    //      1              17             P1-11
+    //      2              18             P1-12
+    //      3              21             P1-13
+    //      4              22             P1-15
+    //      5              23             P1-16
+    //      6              24             P1-18
+    //      7              25             P1-22
+
     if((map.value("target").toString() == "Servo") && (map.value("command").toString() == "init")){
         emit servoInit();
+    }
+    if((map.value("target").toString() == "Servo0")){
+        QString pwm=map.value("command").toString();
+        qDebug() << "servo 0 set to" << pwm;
+        emit servoChanged(0,pwm);
+    }
+    if((map.value("target").toString() == "Servo1")){
+        QString pwm=map.value("command").toString();
+        qDebug() << "servo 1 set to" << pwm;
+        emit servoChanged(1,pwm);
     }
     if((map.value("target").toString() == "Servo2")){
         QString pwm=map.value("command").toString();

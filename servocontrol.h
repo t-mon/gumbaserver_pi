@@ -2,6 +2,7 @@
 #define SERVOCONTROL_H
 
 #include <QObject>
+#include <QLocalSocket>
 #include <QProcess>
 
 class ServoControl : public QObject
@@ -13,6 +14,7 @@ public:
 private:
     QProcess *initServoProcess;
     QString processString;
+    QLocalSocket *servoSocket;
 
 signals:
     void sendToClient(QString,QString);
