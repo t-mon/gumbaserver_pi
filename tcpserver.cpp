@@ -30,7 +30,7 @@ void TcpServer::readData()
     QByteArray dataIn;
 
     dataIn = client->readAll();
-
+    client->flush();
     qDebug() << "----> message recived: " << dataIn;
 
 

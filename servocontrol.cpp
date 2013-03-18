@@ -20,7 +20,8 @@ ServoControl::ServoControl(QObject *parent) :
 
 void ServoControl::initServo(){
 
-    qDebug() << "connect socket to servoblaster...";
+    qDebug() << "try to connect socket to servoblaster...";
+    emit sendToClient("Terminal","try to connect socket to servoblaster...");
 
     if (!servoblaster->open(QIODevice::WriteOnly | QIODevice::Text)){
         emit sendToClient("Terminal","ERROR: could not open /dev/servoblaseter");
@@ -98,11 +99,20 @@ void ServoControl::initServoProcessFinished(const int &exitStatus)
         qDebug() << "ERROR: Servoblaster not inizialized.";
     }
     processString.clear();
-}
 
-void ServoControl::servoSocketConnected()
-{
-    qDebug() << "---> servoblaster socket connected...";
+    if (!servoblaster->open(QIODevice::WriteOnly | QIODevice::Text)){
+        emit sendToClient("Terminal","ERROR: could not open /dev/servoblaseter");
+        emit sendToClient("Terminal","start initskript...");
+
+        qDebug() << "ERROR: could not open /dev/servoblaseter";
+        qDebug() << "start initskript...";
+
+        initServoProcess->start("/root/scripts/initServoblaster.sh");
+        initServoProcess->waitForFinished();
+    }else{
+        emit sendToClient("Terminal","/dev/servoblaseter ... open!");
+        qDebug() << "/dev/servoblaseter ... open!";
+    }
 
 }
 
