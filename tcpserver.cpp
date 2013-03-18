@@ -11,14 +11,14 @@ TcpServer::TcpServer(QObject *parent) :
 {
     m_tcpServer = new QTcpServer(this);
     m_tcpServer->listen(QHostAddress::Any, 2222);
-    qDebug() << "-->Server created";
+    qDebug() << "---> Server created";
     connect(m_tcpServer,SIGNAL(newConnection()),this,SLOT(clientConnected()));
 }
 
 void TcpServer::clientConnected()
 {
     QTcpSocket *client = m_tcpServer->nextPendingConnection();
-    qDebug() << "New Client Connected: " << client->peerAddress().toString() << "over Port " << client->peerPort();
+    qDebug() << "new client connected: " << client->peerAddress().toString();
     connect(client,SIGNAL(readyRead()),this,SLOT(readData()));
     connect(client,SIGNAL(disconnected()),this,SLOT(clientDisconnected()));
     clientList.append(client);
@@ -31,9 +31,45 @@ void TcpServer::readData()
 
     dataIn = client->readAll();
 
+    qDebug() << "----> message recived: " << dataIn;
+
+
     QVariantMap map;
     QJson::Parser parser;
     map = parser.parse(dataIn).toMap();
+
+    // ====================================================================================
+    // SERVO
+
+    // Servo number    GPIO number   Pin in P1 header
+    //      0               4             P1-7
+    //      1              17             P1-11
+    //      2              18             P1-12
+    //      3              21             P1-13
+    //      4              22             P1-15
+    //      5              23             P1-16
+    //      6              24             P1-18
+    //      7              25             P1-22
+
+    if((map.value("target").toString() == "Servo0")){
+        QString pwm=map.value("command").toString();
+        //qDebug() << "servo 0 set to" << pwm;
+        emit servoChanged(0,pwm);
+    }
+    if((map.value("target").toString() == "Servo1")){
+        QString pwm=map.value("command").toString();
+        //qDebug() << "servo 1 set to" << pwm;
+        emit servoChanged(1,pwm);
+    }
+    if((map.value("target").toString() == "Servo2")){
+        QString pwm=map.value("command").toString();
+        //qDebug() << "servo 2 set to" << pwm;
+        emit servoChanged(2,pwm);
+    }
+
+    if((map.value("target").toString() == "Servo") && (map.value("command").toString() == "init")){
+        emit servoInit();
+    }
 
     // ====================================================================================
     // Roboter application
@@ -74,40 +110,10 @@ void TcpServer::readData()
         emit movementStop();
     }
     if((map.value("target").toString() == "RoboterSpeed")){
-        qDebug() << map.value("command").toInt();
+        //qDebug() << map.value("command").toInt();
         emit speedChanged(map.value("command").toInt());
     }
-    // ====================================================================================
-    // SERVO
 
-    // Servo number    GPIO number   Pin in P1 header
-    //      0               4             P1-7
-    //      1              17             P1-11
-    //      2              18             P1-12
-    //      3              21             P1-13
-    //      4              22             P1-15
-    //      5              23             P1-16
-    //      6              24             P1-18
-    //      7              25             P1-22
-
-    if((map.value("target").toString() == "Servo") && (map.value("command").toString() == "init")){
-        emit servoInit();
-    }
-    if((map.value("target").toString() == "Servo0")){
-        QString pwm=map.value("command").toString();
-        qDebug() << "servo 0 set to" << pwm;
-        emit servoChanged(0,pwm);
-    }
-    if((map.value("target").toString() == "Servo1")){
-        QString pwm=map.value("command").toString();
-        qDebug() << "servo 1 set to" << pwm;
-        emit servoChanged(1,pwm);
-    }
-    if((map.value("target").toString() == "Servo2")){
-        QString pwm=map.value("command").toString();
-        qDebug() << "servo 2 set to" << pwm;
-        emit servoChanged(2,pwm);
-    }
 
 }
 

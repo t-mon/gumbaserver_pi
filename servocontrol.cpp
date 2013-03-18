@@ -23,18 +23,20 @@ void ServoControl::initServo(){
     qDebug() << "connect socket to servoblaster...";
 
     if (!servoblaster->open(QIODevice::WriteOnly | QIODevice::Text)){
+        emit sendToClient("Terminal","ERROR: could not open /dev/servoblaseter");
+        emit sendToClient("Terminal","start initskript...");
+
         qDebug() << "ERROR: could not open /dev/servoblaseter";
         qDebug() << "start initskript...";
 
         initServoProcess->start("/root/scripts/initServoblaster.sh");
         initServoProcess->waitForFinished();
     }else{
+        emit sendToClient("Terminal","/dev/servoblaseter ... open!");
         qDebug() << "/dev/servoblaseter ... open!";
     }
 
 }
-
-
 
 
 void ServoControl::setServo(const int &servoNumber, const QString &pwm)
@@ -78,16 +80,9 @@ void ServoControl::setServo(const int &servoNumber, const QString &pwm)
     }
     qDebug() << "Write to servoblaster:" << cmd;
     cmd = cmd + "\n";
-
-    //QByteArray command = QFile::encodeName(cmd + '\n');
-    //servoSocket->write(command);
-
     servoblaster->write(cmd.toAscii());
     servoblaster->flush();
 
-    //servoblaster->close();
-    //writeServo.start("echo", QStringList() << cmd << ">" << "/dev/servoblaster");
-    //writeServo.waitForFinished();
 }
 
 
