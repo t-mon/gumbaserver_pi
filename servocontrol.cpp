@@ -38,7 +38,7 @@ void ServoControl::initServo(){
 void ServoControl::setServo(const int &servoNumber, const QString &pwm)
 {
 
-    //QProcess writeServo;
+    servoblaster->open(QIODevice::WriteOnly | QIODevice::Text);
     QString cmd;
     switch(servoNumber){
     case 0:
@@ -68,10 +68,9 @@ void ServoControl::setServo(const int &servoNumber, const QString &pwm)
     }
     qDebug() << "Write to servoblaster:" << cmd;
     cmd = cmd + "\n";
-    //servoSocket->write(cmd.toAscii());
 
     servoblaster->write(cmd.toAscii());
-    //servoblaster.close();
+    servoblaster->close();
     //writeServo.start("echo", QStringList() << cmd << ">" << "/dev/servoblaster");
     //writeServo.waitForFinished();
 }
