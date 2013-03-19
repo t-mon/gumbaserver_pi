@@ -86,7 +86,7 @@ void ServoControl::setServo(const int &servoNumber, const QString &pwm)
         break;
     }
     qDebug() << "Write to servoblaster:" << cmd;
-    //cmd = cmd + "\n";
+    cmd = cmd + "\n";
     servoblaster->write(cmd.toAscii());
     servoblaster->flush();
 
