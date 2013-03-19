@@ -14,6 +14,7 @@ public:
     explicit TcpServer(QObject *parent = 0);
     
 signals:
+    void newLineToParse(const QString &line);
     void connectGumba();
     void disconnectGumba();
     void startRoboApp();
@@ -36,14 +37,17 @@ signals:
 private:
     QTcpServer *m_tcpServer;
     QList <QTcpSocket*> clientList;
+    QString m_tcpBuffer;
 
 private slots:
     void clientConnected();
     void readData();
+    void parseLine(const QString &line);
     void clientDisconnected();
 
 public slots:
     void sendData(QString target, QString command);
+
 };
     
 

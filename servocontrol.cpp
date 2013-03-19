@@ -20,8 +20,8 @@ ServoControl::ServoControl(QObject *parent) :
 
 void ServoControl::initServo(){
 
-    qDebug() << "try to connect socket to servoblaster...";
-    emit sendToClient("Terminal","try to connect socket to servoblaster...");
+    qDebug() << "try to open servoblaster...";
+    emit sendToClient("Terminal","try to open servoblaster...");
 
     if (!servoblaster->open(QIODevice::WriteOnly | QIODevice::Text)){
         emit sendToClient("Terminal","ERROR: could not open /dev/servoblaseter");
@@ -80,7 +80,7 @@ void ServoControl::setServo(const int &servoNumber, const QString &pwm)
         break;
     }
     qDebug() << "Write to servoblaster:" << cmd;
-    cmd = cmd + "\n";
+    //cmd = cmd + "\n";
     servoblaster->write(cmd.toAscii());
     servoblaster->flush();
 
@@ -94,25 +94,25 @@ void ServoControl::initServoProcessFinished(const int &exitStatus)
     if(exitStatus == 0){
         emit sendToClient("Terminal","Servoblaster initialized successfully!");
         qDebug() << "Servoblaster initialized successfully!";
+        if (!servoblaster->open(QIODevice::WriteOnly | QIODevice::Text)){
+            emit sendToClient("Terminal","ERROR: could not open /dev/servoblaseter");
+            emit sendToClient("Terminal","start initskript...");
+
+            qDebug() << "ERROR: could not open /dev/servoblaseter";
+            qDebug() << "start initskript...";
+
+        }else{
+            emit sendToClient("Terminal","/dev/servoblaseter ... open!");
+            qDebug() << "/dev/servoblaseter ... open!";
+        }
+
     }else{
         emit sendToClient("Terminal","ERROR: Servoblaster not inizialized.");
         qDebug() << "ERROR: Servoblaster not inizialized.";
     }
     processString.clear();
 
-    if (!servoblaster->open(QIODevice::WriteOnly | QIODevice::Text)){
-        emit sendToClient("Terminal","ERROR: could not open /dev/servoblaseter");
-        emit sendToClient("Terminal","start initskript...");
 
-        qDebug() << "ERROR: could not open /dev/servoblaseter";
-        qDebug() << "start initskript...";
-
-        initServoProcess->start("/root/scripts/initServoblaster.sh");
-        initServoProcess->waitForFinished();
-    }else{
-        emit sendToClient("Terminal","/dev/servoblaseter ... open!");
-        qDebug() << "/dev/servoblaseter ... open!";
-    }
 
 }
 

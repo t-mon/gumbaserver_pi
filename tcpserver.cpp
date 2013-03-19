@@ -3,6 +3,8 @@
 #include <QVariant>
 #include <QVariantMap>
 #include <QTcpSocket>
+#include <qjson/parser.h>
+#include <qjson/serializer.h>
 
 #include "tcpserver.h"
 
@@ -13,6 +15,7 @@ TcpServer::TcpServer(QObject *parent) :
     m_tcpServer->listen(QHostAddress::Any, 2222);
     qDebug() << "---> Server created";
     connect(m_tcpServer,SIGNAL(newConnection()),this,SLOT(clientConnected()));
+    connect(this,SIGNAL(newLineToParse(QString)),this,SLOT(parseLine(QString)));
 }
 
 void TcpServer::clientConnected()
@@ -27,16 +30,23 @@ void TcpServer::clientConnected()
 void TcpServer::readData()
 {
     QTcpSocket *client = qobject_cast<QTcpSocket*>(sender());
-    QByteArray dataIn;
+    m_tcpBuffer.append(client->readAll());
 
-    dataIn = client->readAll();
-    client->flush();
-    qDebug() << "----> message recived: " << dataIn;
+    int newLinePositionPackage = m_tcpBuffer.indexOf('\n')+1;
+    qDebug() << "----> data to parse: " << m_tcpBuffer.left(newLinePositionPackage);
 
+    emit newLineToParse(m_tcpBuffer.left(newLinePositionPackage));
+    m_tcpBuffer = m_tcpBuffer.right((m_tcpBuffer.length() - newLinePositionPackage));
+
+
+}
+
+void TcpServer::parseLine(const QString &line)
+{
 
     QVariantMap map;
     QJson::Parser parser;
-    map = parser.parse(dataIn).toMap();
+    map = parser.parse(line.toAscii()).toMap();
 
     // ====================================================================================
     // SERVO
