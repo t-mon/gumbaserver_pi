@@ -31,13 +31,13 @@ void TcpServer::readData()
 {
     QTcpSocket *client = qobject_cast<QTcpSocket*>(sender());
     m_tcpBuffer.append(client->readAll());
+    while(!m_tcpBuffer.isEmpty()){
+        int newLinePositionPackage = m_tcpBuffer.indexOf('\n') + 1;
+        qDebug() << "----> data to parse: " << m_tcpBuffer.left(newLinePositionPackage);
 
-    int newLinePositionPackage = m_tcpBuffer.indexOf('\n') + 1;
-    qDebug() << "----> data to parse: " << m_tcpBuffer.left(newLinePositionPackage);
-
-    emit newLineToParse(m_tcpBuffer.left(newLinePositionPackage));
-    m_tcpBuffer = m_tcpBuffer.right((m_tcpBuffer.length() - newLinePositionPackage));
-
+        emit newLineToParse(m_tcpBuffer.left(newLinePositionPackage));
+        m_tcpBuffer = m_tcpBuffer.right((m_tcpBuffer.length() - newLinePositionPackage));
+    }
 
 }
 
