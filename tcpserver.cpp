@@ -32,7 +32,7 @@ void TcpServer::readData()
     QTcpSocket *client = qobject_cast<QTcpSocket*>(sender());
     m_tcpBuffer.append(client->readAll());
 
-    int newLinePositionPackage = m_tcpBuffer.indexOf('\n');
+    int newLinePositionPackage = m_tcpBuffer.indexOf('\n') + 1;
     qDebug() << "----> data to parse: " << m_tcpBuffer.left(newLinePositionPackage);
 
     emit newLineToParse(m_tcpBuffer.left(newLinePositionPackage));
