@@ -23,6 +23,12 @@ void ServoControl::initServo(){
     qDebug() << "try to open servoblaster...";
     emit sendToClient("Terminal","try to open servoblaster...");
 
+    if(servoblaster->isOpen()){
+        qDebug() << "servoblaster allready open!";
+        emit sendToClient("Terminal","servoblaster allready open!");
+        return;
+    }
+
     if (!servoblaster->open(QIODevice::WriteOnly | QIODevice::Text)){
         emit sendToClient("Terminal","ERROR: could not open /dev/servoblaseter");
         emit sendToClient("Terminal","start initskript...");
