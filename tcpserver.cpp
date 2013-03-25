@@ -34,7 +34,9 @@ void TcpServer::readData()
     while(!m_tcpBuffer.isEmpty()){
         int newLinePositionPackage = m_tcpBuffer.indexOf('\n') + 1;
         qDebug() << "----> data to parse: " << m_tcpBuffer.left(newLinePositionPackage);
-
+        if(m_tcpBuffer.isEmpty()){
+            break;
+        }
         emit newLineToParse(m_tcpBuffer.left(newLinePositionPackage));
         m_tcpBuffer = m_tcpBuffer.right((m_tcpBuffer.length() - newLinePositionPackage));
     }
