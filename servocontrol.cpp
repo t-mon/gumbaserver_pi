@@ -16,6 +16,7 @@ ServoControl::ServoControl(QObject *parent) :
     connect(initServoProcess,SIGNAL(readyReadStandardError()),this,SLOT(initServoProcessReadStandardError()));
     connect(initServoProcess,SIGNAL(finished(int)),this,SLOT(initServoProcessFinished(int)));
 
+    initServo();
 }
 
 void ServoControl::initServo(){

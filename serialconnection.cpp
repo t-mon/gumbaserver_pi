@@ -50,14 +50,14 @@ void SerialConnection::startGumbaApplication()
 
 void SerialConnection::movementForward()
 {
-    gumba->write("f:100;100\n");
+    gumba->write("w\n");
     qDebug() << "move forward";
     gumba->flush();
 }
 
 void SerialConnection::movementBackward()
 {
-    gumba->write("b:100;100\n");
+    gumba->write("s\n");
     qDebug() << "move backward";
     gumba->flush();
 }
