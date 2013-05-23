@@ -43,7 +43,7 @@ void SerialConnection::disconnectGumba()
 
 void SerialConnection::startGumbaApplication()
 {
-    gumba->write("s\n");
+    gumba->write("s\0");
     qDebug() << "Start robot application";
     gumba->flush();
 }
@@ -99,28 +99,28 @@ void SerialConnection::movementStop()
 
 void SerialConnection::speedChanged(const int &speedLevel)
 {
-    switch(speedLevel){
-    case 1:
-        gumba->write("u\n");
-        gumba->flush();
-        qDebug() << "speedlevel 1";
-        break;
-    case 2:
-        gumba->write("i\n");
-        gumba->flush();
-        qDebug() << "speedlevel 2";
-        break;
-    case 3:
-        gumba->write("o\n");
-        gumba->flush();
-        qDebug() << "speedlevel 3";
-        break;
-    case 4:
-        gumba->write("p\n");
-        gumba->flush();
-        qDebug() << "speedlevel MAX";
-        break;
-    }
+//    switch(speedLevel){
+//    case 1:
+//        gumba->write("u\n");
+//        gumba->flush();
+//        qDebug() << "speedlevel 1";
+//        break;
+//    case 2:
+//        gumba->write("i\n");
+//        gumba->flush();
+//        qDebug() << "speedlevel 2";
+//        break;
+//    case 3:
+//        gumba->write("o\n");
+//        gumba->flush();
+//        qDebug() << "speedlevel 3";
+//        break;
+//    case 4:
+//        gumba->write("p\n");
+//        gumba->flush();
+//        qDebug() << "speedlevel MAX";
+//        break;
+//    }
 }
 
 void SerialConnection::toggleRTS()
@@ -128,6 +128,8 @@ void SerialConnection::toggleRTS()
     gumba->setRts(true);
     gumba->setRts(false);
     qDebug() << "RESET...toggle RTS!";
+    gumba->flush();
+
 }
 
 void SerialConnection::gumbaPackageAvalable()
