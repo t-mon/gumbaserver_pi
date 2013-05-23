@@ -146,43 +146,46 @@ void SerialConnection::parseNewLine(const QString &gumbaString)
     }
 
     emit sendToClient("GumbaData",gumbaString);
-
-    if (gumbaString.at(0) == '{'){
-        QVariantMap sensors;
-        QJson::Parser parser;
-        sensors = parser.parse(gumbaString.toAscii()).toMap();
-
-        if((gumbaString.at(0) == '{') && (gumbaString.at(1) == '"') && (gumbaString.at(2) == 'e')){
-            if(sensors.value("energy").toMap().value("batery").toInt() == 1){
-                double ubat = sensors.value("energy").toMap().value("voltage").toDouble();
-                double iMotorR = sensors.value("energy").toMap().value("motor_r").toDouble();
-                double iMotorL = sensors.value("energy").toMap().value("motor_l").toDouble();
-                double lightR = sensors.value("energy").toMap().value("light_r").toDouble();
-                double lightL = sensors.value("energy").toMap().value("light_l").toDouble();
-            }
-        }
-
-        if((gumbaString.at(0) == '{') && (gumbaString.at(1) == '"') && (gumbaString.at(2) == 'o')){
-            if(sensors.value("obstacles").toMap().value("left").toInt() == 0){
-                emit obstacleLeftOff();
-            } if(sensors.value("obstacles").toMap().value("left").toInt() == 1){
-                emit obstacleLeftOn();
-            } if(sensors.value("obstacles").toMap().value("right").toInt() == 0){
-                emit obstacleRightOff();
-            } if(sensors.value("obstacles").toMap().value("right").toInt() == 1){
-                emit obstacleRightOn();
-            }
-        }
-        if((gumbaString.at(0) == '{') && (gumbaString.at(1) == '"') && (gumbaString.at(2) == 'b')){
-            if(sensors.value("bumper").toMap().value("left").toInt() == 0){
-                emit bumperLeftReleased();
-            } if(sensors.value("bumper").toMap().value("left").toInt() == 1){
-                emit bumperLeftPressd();
-            } if(sensors.value("bumper").toMap().value("right").toInt() == 0){
-                emit bumperRightReleased();
-            } if(sensors.value("bumper").toMap().value("right").toInt() == 1){
-                emit bumperRightPressed();
-            }
-        }
+    if (gumbaString.at(0) != '{'){
+        qDebug() << gumbaString;
     }
+
+//    if (gumbaString.at(0) == '{'){
+//        QVariantMap sensors;
+//        QJson::Parser parser;
+//        sensors = parser.parse(gumbaString.toAscii()).toMap();
+
+//        if((gumbaString.at(0) == '{') && (gumbaString.at(1) == '"') && (gumbaString.at(2) == 'e')){
+//            if(sensors.value("energy").toMap().value("batery").toInt() == 1){
+//                double ubat = sensors.value("energy").toMap().value("voltage").toDouble();
+//                double iMotorR = sensors.value("energy").toMap().value("motor_r").toDouble();
+//                double iMotorL = sensors.value("energy").toMap().value("motor_l").toDouble();
+//                double lightR = sensors.value("energy").toMap().value("light_r").toDouble();
+//                double lightL = sensors.value("energy").toMap().value("light_l").toDouble();
+//            }
+//        }
+
+//        if((gumbaString.at(0) == '{') && (gumbaString.at(1) == '"') && (gumbaString.at(2) == 'o')){
+//            if(sensors.value("obstacles").toMap().value("left").toInt() == 0){
+//                emit obstacleLeftOff();
+//            } if(sensors.value("obstacles").toMap().value("left").toInt() == 1){
+//                emit obstacleLeftOn();
+//            } if(sensors.value("obstacles").toMap().value("right").toInt() == 0){
+//                emit obstacleRightOff();
+//            } if(sensors.value("obstacles").toMap().value("right").toInt() == 1){
+//                emit obstacleRightOn();
+//            }
+//        }
+//        if((gumbaString.at(0) == '{') && (gumbaString.at(1) == '"') && (gumbaString.at(2) == 'b')){
+//            if(sensors.value("bumper").toMap().value("left").toInt() == 0){
+//                emit bumperLeftReleased();
+//            } if(sensors.value("bumper").toMap().value("left").toInt() == 1){
+//                emit bumperLeftPressd();
+//            } if(sensors.value("bumper").toMap().value("right").toInt() == 0){
+//                emit bumperRightReleased();
+//            } if(sensors.value("bumper").toMap().value("right").toInt() == 1){
+//                emit bumperRightPressed();
+//            }
+//        }
+//    }
 }
