@@ -43,56 +43,56 @@ void SerialConnection::disconnectGumba()
 
 void SerialConnection::startGumbaApplication()
 {
-    gumba->write("s\0");
+    gumba->write("s\n");
     qDebug() << "Start robot application";
     gumba->flush();
 }
 
 void SerialConnection::movementForward()
 {
-    gumba->write("f:50;50\0");
+    gumba->write("f:50;50\n");
     qDebug() << "move forward";
     gumba->flush();
 }
 
 void SerialConnection::movementBackward()
 {
-    gumba->write("b:50;50\0");
+    gumba->write("b:50;50\n");
     qDebug() << "move backward";
     gumba->flush();
 }
 
 void SerialConnection::movementLeft()
 {
-    gumba->write("f:50;70\0");
+    gumba->write("f:50;70\n");
     qDebug() << "move left";
     gumba->flush();
 }
 
 void SerialConnection::movementRight()
 {
-    gumba->write("f:70;50\0");
+    gumba->write("f:70;50\n");
     qDebug() << "move right";
     gumba->flush();
 }
 
 void SerialConnection::movementTurnLeft()
 {
-    gumba->write("l:50\0");
+    gumba->write("l:50\n");
     qDebug() << "turn left";
     gumba->flush();
 }
 
 void SerialConnection::movementTurnRight()
 {
-    gumba->write("r:50\0");
+    gumba->write("r:50\n");
     qDebug() << "turn right";
     gumba->flush();
 }
 
 void SerialConnection::movementStop()
 {
-    gumba->write("s\0");
+    gumba->write("s\n");
     qDebug() << "STOP";
     gumba->flush();
 }
