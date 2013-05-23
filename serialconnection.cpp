@@ -145,7 +145,9 @@ void SerialConnection::parseNewLine(const QString &gumbaString)
         return;
     }
 
-    emit sendToClient("GumbaData",gumbaString);
+    if (gumbaString.at(0) == '{'){
+        emit sendToClient("GumbaData",gumbaString);
+    }
     if (gumbaString.at(0) != '{'){
         qDebug() << gumbaString;
     }
