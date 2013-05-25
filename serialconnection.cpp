@@ -50,8 +50,8 @@ void SerialConnection::startGumbaApplication()
 
 void SerialConnection::movementCommand(const QString &gumbaMoveCommand)
 {
-    QString data = gumbaMoveCommand + "\n";
-    gumba->write(data.toUtf8());
+    //QString data = gumbaMoveCommand + "\n";
+    gumba->write(gumbaMoveCommand.toAscii());
     qDebug() << "send to gumba: " << gumbaMoveCommand;
     gumba->flush();
 }
