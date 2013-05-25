@@ -91,12 +91,12 @@ void SerialConnection::movementCommand(const QString &gumbaMoveCommand)
 //    gumba->flush();
 //}
 
-//void SerialConnection::movementStop()
-//{
-//    gumba->write("s\n");
-//    qDebug() << "STOP";
-//    gumba->flush();
-//}
+void SerialConnection::movementStop()
+{
+    gumba->write("f:10;10\n");
+    qDebug() << "STOP";
+    gumba->flush();
+}
 
 //void SerialConnection::speedChanged(const int &speedLevel)
 //{

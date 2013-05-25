@@ -19,7 +19,7 @@ Core::Core(QObject *parent) :
     //    connect(m_server,SIGNAL(movementRight()),m_robot,SLOT(movementRight()));
     //    connect(m_server,SIGNAL(movementTurnLeft()),m_robot,SLOT(movementTurnLeft()));
     //    connect(m_server,SIGNAL(movementTurnRight()),m_robot,SLOT(movementTurnRight()));
-    //    connect(m_server,SIGNAL(movementStop()),m_robot,SLOT(movementStop()));
+        connect(m_server,SIGNAL(movementStop()),m_robot,SLOT(movementStop()));
 
     //    connect(m_server,SIGNAL(speedChanged(int)),m_robot,SLOT(speedChanged(int)));
 

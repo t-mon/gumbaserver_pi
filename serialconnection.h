@@ -49,7 +49,7 @@ public slots:
 //    void movementRight();
 //    void movementTurnLeft();
 //    void movementTurnRight();
-//    void movementStop();
+    void movementStop();
 
 //    void speedChanged(const int &speedLevel);
 

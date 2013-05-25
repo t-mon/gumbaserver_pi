@@ -119,9 +119,9 @@ void TcpServer::parseLine(const QString &line)
 //    if((map.value("target").toString() == "RoboterMovement") && (map.value("command").toString() == "turnRight")){
 //        emit movementTurnRight();
 //    }
-//    if((map.value("target").toString() == "RoboterMovement") && (map.value("command").toString() == "stop")){
-//        emit movementStop();
-//    }
+    if((map.value("target").toString() == "RoboterMovement") && (map.value("command").toString() == "stop")){
+        emit movementStop();
+    }
 //    if((map.value("target").toString() == "RoboterSpeed")){
 //        //qDebug() << map.value("command").toInt();
 //        emit speedChanged(map.value("command").toInt());
