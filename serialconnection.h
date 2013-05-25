@@ -43,15 +43,15 @@ public slots:
     void toggleRTS();
     void startGumbaApplication();
 
-    void movementForward();
-    void movementBackward();
-    void movementLeft();
-    void movementRight();
-    void movementTurnLeft();
-    void movementTurnRight();
-    void movementStop();
+    void movementCommand(const QString &gumbaMoveCommand);
+//    void movementBackward();
+//    void movementLeft();
+//    void movementRight();
+//    void movementTurnLeft();
+//    void movementTurnRight();
+//    void movementStop();
 
-    void speedChanged(const int &speedLevel);
+//    void speedChanged(const int &speedLevel);
 
 };
 

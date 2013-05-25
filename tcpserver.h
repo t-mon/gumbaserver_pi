@@ -20,15 +20,17 @@ signals:
     void startRoboApp();
     void toggleRTS();
 
-    void movementForward();
-    void movementBackward();
-    void movementLeft();
-    void movementRight();
-    void movementTurnLeft();
-    void movementTurnRight();
-    void movementStop();
+    void movementCommand(const QString &gumbaMoveCommand);
 
-    void speedChanged(const int &speedLevel);
+//    void movementForward();
+//    void movementBackward();
+//    void movementLeft();
+//    void movementRight();
+//    void movementTurnLeft();
+//    void movementTurnRight();
+//    void movementStop();
+
+//    void speedChanged(const int &speedLevel);
 
     void servoInit();
     void servoChanged(const int &servoNumber, const QString &pwm);

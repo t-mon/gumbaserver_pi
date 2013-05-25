@@ -100,31 +100,31 @@ void TcpServer::parseLine(const QString &line)
 
     // ====================================================================================
     // Roboter movement
-    if((map.value("target").toString() == "RoboterMovement") && (map.value("command").toString() == "forward")){
-        emit movementForward();
+    if((map.value("target").toString() == "RoboterMovement")){
+        emit movementCommand(map.value("command").toString());
     }
-    if((map.value("target").toString() == "RoboterMovement") && (map.value("command").toString() == "backward")){
-        emit movementBackward();
-    }
-    if((map.value("target").toString() == "RoboterMovement") && (map.value("command").toString() == "left")){
-        emit movementLeft();
-    }
-    if((map.value("target").toString() == "RoboterMovement") && (map.value("command").toString() == "right")){
-        emit movementRight();
-    }
-    if((map.value("target").toString() == "RoboterMovement") && (map.value("command").toString() == "turnLeft")){
-        emit movementTurnLeft();
-    }
-    if((map.value("target").toString() == "RoboterMovement") && (map.value("command").toString() == "turnRight")){
-        emit movementTurnRight();
-    }
-    if((map.value("target").toString() == "RoboterMovement") && (map.value("command").toString() == "stop")){
-        emit movementStop();
-    }
-    if((map.value("target").toString() == "RoboterSpeed")){
-        //qDebug() << map.value("command").toInt();
-        emit speedChanged(map.value("command").toInt());
-    }
+//    if((map.value("target").toString() == "RoboterMovement") && (map.value("command").toString() == "backward")){
+//        emit movementBackward();
+//    }
+//    if((map.value("target").toString() == "RoboterMovement") && (map.value("command").toString() == "left")){
+//        emit movementLeft();
+//    }
+//    if((map.value("target").toString() == "RoboterMovement") && (map.value("command").toString() == "right")){
+//        emit movementRight();
+//    }
+//    if((map.value("target").toString() == "RoboterMovement") && (map.value("command").toString() == "turnLeft")){
+//        emit movementTurnLeft();
+//    }
+//    if((map.value("target").toString() == "RoboterMovement") && (map.value("command").toString() == "turnRight")){
+//        emit movementTurnRight();
+//    }
+//    if((map.value("target").toString() == "RoboterMovement") && (map.value("command").toString() == "stop")){
+//        emit movementStop();
+//    }
+//    if((map.value("target").toString() == "RoboterSpeed")){
+//        //qDebug() << map.value("command").toInt();
+//        emit speedChanged(map.value("command").toInt());
+//    }
 
 
 }

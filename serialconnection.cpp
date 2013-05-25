@@ -48,80 +48,81 @@ void SerialConnection::startGumbaApplication()
     gumba->flush();
 }
 
-void SerialConnection::movementForward()
+void SerialConnection::movementCommand(const QString &gumbaMoveCommand)
 {
-    gumba->write("f:50;50\n");
-    qDebug() << "move forward";
+    QString data = gumbaMoveCommand + "\n";
+    gumba->write(data.toUtf8());
+    qDebug() << "send to gumba: " << gumbaMoveCommand;
     gumba->flush();
 }
 
-void SerialConnection::movementBackward()
-{
-    gumba->write("b:50;50\n");
-    qDebug() << "move backward";
-    gumba->flush();
-}
+//void SerialConnection::movementBackward()
+//{
+//    gumba->write("b:50;50\n");
+//    qDebug() << "move backward";
+//    gumba->flush();
+//}
 
-void SerialConnection::movementLeft()
-{
-    gumba->write("f:50;70\n");
-    qDebug() << "move left";
-    gumba->flush();
-}
+//void SerialConnection::movementLeft()
+//{
+//    gumba->write("f:50;70\n");
+//    qDebug() << "move left";
+//    gumba->flush();
+//}
 
-void SerialConnection::movementRight()
-{
-    gumba->write("f:70;50\n");
-    qDebug() << "move right";
-    gumba->flush();
-}
+//void SerialConnection::movementRight()
+//{
+//    gumba->write("f:70;50\n");
+//    qDebug() << "move right";
+//    gumba->flush();
+//}
 
-void SerialConnection::movementTurnLeft()
-{
-    gumba->write("l:50\n");
-    qDebug() << "turn left";
-    gumba->flush();
-}
+//void SerialConnection::movementTurnLeft()
+//{
+//    gumba->write("l:50\n");
+//    qDebug() << "turn left";
+//    gumba->flush();
+//}
 
-void SerialConnection::movementTurnRight()
-{
-    gumba->write("r:50\n");
-    qDebug() << "turn right";
-    gumba->flush();
-}
+//void SerialConnection::movementTurnRight()
+//{
+//    gumba->write("r:50\n");
+//    qDebug() << "turn right";
+//    gumba->flush();
+//}
 
-void SerialConnection::movementStop()
-{
-    gumba->write("s\n");
-    qDebug() << "STOP";
-    gumba->flush();
-}
+//void SerialConnection::movementStop()
+//{
+//    gumba->write("s\n");
+//    qDebug() << "STOP";
+//    gumba->flush();
+//}
 
-void SerialConnection::speedChanged(const int &speedLevel)
-{
-//    switch(speedLevel){
-//    case 1:
-//        gumba->write("u\n");
-//        gumba->flush();
-//        qDebug() << "speedlevel 1";
-//        break;
-//    case 2:
-//        gumba->write("i\n");
-//        gumba->flush();
-//        qDebug() << "speedlevel 2";
-//        break;
-//    case 3:
-//        gumba->write("o\n");
-//        gumba->flush();
-//        qDebug() << "speedlevel 3";
-//        break;
-//    case 4:
-//        gumba->write("p\n");
-//        gumba->flush();
-//        qDebug() << "speedlevel MAX";
-//        break;
-//    }
-}
+//void SerialConnection::speedChanged(const int &speedLevel)
+//{
+////    switch(speedLevel){
+////    case 1:do
+////        gumba->write("u\n");
+////        gumba->flush();
+////        qDebug() << "speedlevel 1";
+////        break;
+////    case 2:
+////        gumba->write("i\n");
+////        gumba->flush();
+////        qDebug() << "speedlevel 2";
+////        break;
+////    case 3:
+////        gumba->write("o\n");
+////        gumba->flush();
+////        qDebug() << "speedlevel 3";
+////        break;
+////    case 4:
+////        gumba->write("p\n");
+////        gumba->flush();
+////        qDebug() << "speedlevel MAX";
+////        break;
+////    }
+//}
 
 void SerialConnection::toggleRTS()
 {
