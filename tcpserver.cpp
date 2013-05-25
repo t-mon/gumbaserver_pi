@@ -101,6 +101,7 @@ void TcpServer::parseLine(const QString &line)
     // ====================================================================================
     // Roboter movement
     if((map.value("target").toString() == "RoboterMovement")){
+        qDebug() << "emit " << map.value("command").toString();
         emit movementCommand(map.value("command").toString());
     }
 //    if((map.value("target").toString() == "RoboterMovement") && (map.value("command").toString() == "backward")){
