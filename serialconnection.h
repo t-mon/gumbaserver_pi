@@ -44,15 +44,7 @@ public slots:
     void startGumbaApplication();
 
     void movementCommand(const QString &gumbaMoveCommand);
-//    void movementBackward();
-//    void movementLeft();
-//    void movementRight();
-//    void movementTurnLeft();
-//    void movementTurnRight();
     void movementStop();
-
-//    void speedChanged(const int &speedLevel);
-
 };
 
 #endif // SERIALCONNECTION_H
